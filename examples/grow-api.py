@@ -1,4 +1,5 @@
 from flask import Flask
+from datetime import datetime
 
 from grow.moisture import Moisture
 
@@ -14,9 +15,10 @@ def read_sensor(id):
 @app.route("/moisture/<int:sensor_id>")
 def get_moisture(sensor_id):
     if sensor_id in range(1,4):
-        return read_sensor(sensor_id-1)
+        data = '[{},{}]'.format(datetime.now().isoformat(),read_sensor(sensor_id-1))
     else:
-        return "Enter a sensor ID between 1 and 3"
+        data = "Enter a sensor ID between 1 and 3"
+    return data
 
 @app.route("/moisture")
 def get_moistures():
